@@ -8,19 +8,15 @@
 std::vector<std::string> SplitString(std::string_view to_split, std::string_view delim)
 {
     std::vector<std::string> substrs;
-    auto found = to_split.find(delim);
-    decltype(found) prev_found = 0;
-    while (true)
-    {
+    std::size_t found{};
+    std::size_t prev_found{};
+    do {
+        found = to_split.find(delim, prev_found);
         auto substr = to_split.substr(prev_found, found);
         substrs.emplace_back(substr.data(), substr.size());
-        if (found == std::string_view::npos)
-        {
-            break;
-        }
         prev_found = found + delim.size();
-        found = to_split.find(delim, prev_found);
-    }
+    } while (found != std::string_view::npos);
+
     return substrs;
 }
 
