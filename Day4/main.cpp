@@ -37,6 +37,7 @@ int main(int argc, char* argv[])
         if (std::fstream data(argv[1]); data)
         {
             unsigned subsets{};
+            unsigned intersections{};
             std::string range;
             while (std::getline(data, range))
             {
@@ -58,19 +59,20 @@ int main(int argc, char* argv[])
                     return { back, front };
                 }();
 
-                //difference for parts 1 and 2 is this line
-                //if (lowest_min.first == highest_min.first || lowest_min.second >= highest_min.second)
-                if (lowest_min.second >= highest_min.first)
+                //part 1
+                if (lowest_min.first == highest_min.first || lowest_min.second >= highest_min.second)
                 {
                     ++subsets;
                 }
-                else
+                //part 2
+                if (lowest_min.second >= highest_min.first)
                 {
-                    std::cout << range << '\n';
+                    ++intersections;
                 }
             }
 
-            std::cout << "Subsets: " << subsets << '\n';
+            std::cout << "Subsets (Part 1): " << subsets << 
+                "\nIntersections (Part 2): " << intersections << '\n';
             return 0;
         }
 
